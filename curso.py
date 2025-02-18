@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 
 #Cargar datos
-    file_path = "integridad.csv"
+   file_path = "integridad.csv"
     try:
         df = pd.read_csv(file_path)
         return df
