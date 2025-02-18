@@ -3,10 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO
 
-def load_data():
-    file_path = r"C:\Users\mariajose.campos\Documents\CursoRicky\integridad.csv"
-    return pd.read_csv(file_path)
-
+#Cargar datos
+    file_path = "integridad.csv"
+  
 def main():
     st.title("Dashboard de Integridad Académica")
     
