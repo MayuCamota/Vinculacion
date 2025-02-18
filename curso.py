@@ -5,13 +5,19 @@ from io import BytesIO
 
 #Cargar datos
     file_path = "integridad.csv"
-  
+    try:
+        df = pd.read_csv(file_path)
+        return df
+    except FileNotFoundError:
+        st.error("No se encontró el archivo CSV. Verifica la ruta y el nombre del archivo.")
+        return pd.DataFrame()
+
 def main():
     st.title("Dashboard de Integridad Académica")
     
     df = load_data()
     
-    # Verificar que las columnas existen
+    # Verificar que las columnas requeridas existen
     required_columns = ["Universidad", "Licenciatura", "Integridad Académica"]
     if not all(col in df.columns for col in required_columns):
         st.error("El archivo CSV no contiene las columnas esperadas. Verifica la estructura del archivo.")
@@ -23,9 +29,13 @@ def main():
     df_filtrado = df[df["Universidad"] == universidad_seleccionada]
     
     # Filtro por Licenciatura (se habilita solo si hay universidad seleccionada)
-    licenciaturas = df_filtrado["Licenciatura"].unique()
-    licenciatura_seleccionada = st.selectbox("Selecciona una Licenciatura", licenciaturas)
-    df_final = df_filtrado[df_filtrado["Licenciatura"] == licenciatura_seleccionada]
+    if not df_filtrado.empty:
+        licenciaturas = df_filtrado["Licenciatura"].unique()
+        licenciatura_seleccionada = st.selectbox("Selecciona una Licenciatura", licenciaturas)
+        df_final = df_filtrado[df_filtrado["Licenciatura"] == licenciatura_seleccionada]
+    else:
+        st.warning("No hay datos disponibles para la universidad seleccionada.")
+        return
     
     # Verificar si hay datos para graficar
     if df_final.empty:
@@ -48,3 +58,4 @@ def main():
     
 if __name__ == "__main__":
     main()
+
