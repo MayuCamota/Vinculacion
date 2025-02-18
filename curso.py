@@ -37,10 +37,14 @@ def main():
         st.warning("No hay datos disponibles para la universidad seleccionada.")
         return
     
-    # Verificar si hay datos para graficar
+    # Verificar si hay datos para mostrar
     if df_final.empty:
         st.warning("No hay datos disponibles para la selección actual.")
         return
+    
+    # Mostrar tabla con los datos filtrados
+    st.subheader("Datos Filtrados")
+    st.dataframe(df_final)
     
     # Gráfico de barras
     fig, ax = plt.subplots()
