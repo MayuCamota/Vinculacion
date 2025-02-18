@@ -3,9 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO
 
-#Cargar datos
 def load_data():
-    file_path = "integridad.csv"
+    file_path = "github/integridad.csv"  # Ruta a la base de datos en la carpeta GitHub
     try:
         df = pd.read_csv(file_path)
         return df
@@ -25,13 +24,13 @@ def main():
         return
     
     # Filtro por Universidad
-    universidades = df["Universidad"].unique()
+    universidades = df["Universidad"].dropna().unique()
     universidad_seleccionada = st.selectbox("Selecciona una Universidad", universidades)
     df_filtrado = df[df["Universidad"] == universidad_seleccionada]
     
     # Filtro por Licenciatura (se habilita solo si hay universidad seleccionada)
     if not df_filtrado.empty:
-        licenciaturas = df_filtrado["Licenciatura"].unique()
+        licenciaturas = df_filtrado["Licenciatura"].dropna().unique()
         licenciatura_seleccionada = st.selectbox("Selecciona una Licenciatura", licenciaturas)
         df_final = df_filtrado[df_filtrado["Licenciatura"] == licenciatura_seleccionada]
     else:
@@ -45,7 +44,7 @@ def main():
     
     # Gráfico de barras
     fig, ax = plt.subplots()
-    ax.bar(df_final["Licenciatura"], df_final["Integridad Académica"], color='skyblue')
+    ax.bar(df_final["Licenciatura"], df_final["Integridad Académica"].astype(float), color='skyblue')
     ax.set_xlabel("Licenciatura")
     ax.set_ylabel("Integridad Académica")
     ax.set_title("Integridad Académica por Licenciatura")
@@ -59,4 +58,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-
