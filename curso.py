@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # Usar backend compatible con Streamlit
 import matplotlib.pyplot as plt
 from io import BytesIO
 
