@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 
 def load_data():
-    file_path = "github/integridad.csv"  # Ruta a la base de datos en la carpeta GitHub
+    file_path = "integridad.csv"  # Ruta a la base de datos en la carpeta GitHub
     try:
         df = pd.read_csv(file_path)
         return df
